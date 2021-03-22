@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.LoginController">
+   <children>
+      <BorderPane fx:id="borderPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F2EFEB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
+               <menus>
+                  <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Edit">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </top>
+         <center>
+            <VBox alignment="CENTER" maxWidth="400.0" minHeight="300.0" minWidth="300.0" prefHeight="575.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="105.0" fitWidth="370.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Mais%20que%20Bom.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="50.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Label alignment="TOP_CENTER" contentDisplay="CENTER" styleClass="faca-login-para-continuar" stylesheets="@../css/global.css" text="Faça Login para continuar">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Email" />
+                  <TextField fx:id="loginEmail" promptText="seu@email.com" stylesheets="@../css/global.css">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="mt-4" />
+                        <String fx:value="input" />
+                     </styleClass>
+                  </TextField>
+                  <Label text="Senha" />
+                  <PasswordField fx:id="loginPassword" promptText="*********" stylesheets="@../css/global.css">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="mt-4" />
+                        <String fx:value="input" />
+                     </styleClass>
+                  </PasswordField>
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#login" prefWidth="80.0" styleClass="mt-4" stylesheets="@../css/global.css" text="Entrar" />
+               </children>
+            </VBox>
+         </center>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+      </BorderPane>
+   </children>
+</AnchorPane>

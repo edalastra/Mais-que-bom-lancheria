@@ -1,0 +1,23 @@
+.mt-4 {
+    -fx-border-insets: 4px;
+    -fx-background-insets: 5px;
+    -fx-padding: 10px;
+}
+
+.input {
+    -fx-font-size: 12px;
+}
+
+.faca-login-para-continuar {
+    -fx-background-insets: 20px;
+    -fx-background-insets: 20px;
+    -fx-padding: 20px;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-opacity: 1;
+}
+
+.button {
+    -fx-background-color: #D97823;
+    -fx-text-fill: white;
+}
