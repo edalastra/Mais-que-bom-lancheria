@@ -1,6 +1,7 @@
 package com.controledecomandas.database.dao;
 
 import com.controledecomandas.database.PostgresConnection;
+import com.controledecomandas.models.Item;
 import com.controledecomandas.models.User;
 import com.controledecomandas.utils.GenerateHash;
 
@@ -74,6 +75,39 @@ public class UserDao {
             }
             postgresConnection.desconnect();
         }
+        return false;
+
+    }
+
+    public boolean update(User user) throws SQLException {
+        PostgresConnection postgresConnection = new PostgresConnection();
+        boolean connected = postgresConnection.connect();
+
+        String sqlInsert = "UPDATE users SET first_name = ?, last_name = ?, telephone = ?, is_admin = ?, salary = ?, zipcode = ?, address = ?" +
+                "WHERE id = ?";
+
+        try(PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlInsert)) {
+            pstmt.setString(1, user.getFirstName());
+            pstmt.setString(2, user.getLastName());
+            pstmt.setString(3, user.getTelephone());
+            pstmt.setBoolean(4, user.getAccess());
+            pstmt.setBigDecimal(5, user.getSalary());
+            pstmt.setString(6, user.getZipcode());
+            pstmt.setString(7, user.getAddress());
+            pstmt.setInt(8, user.getId());
+
+
+            int rs = pstmt.executeUpdate();
+
+            if(rs == 1) {
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throw throwables;
+        } finally {
+            postgresConnection.desconnect();
+        }
+
         return false;
 
     }

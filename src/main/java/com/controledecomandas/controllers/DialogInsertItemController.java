@@ -125,7 +125,7 @@ public class DialogInsertItemController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(update) {
-            labelMain.setText("Alterar item");
+            labelMain.setText("Alterar Item");
         }
     }
 }

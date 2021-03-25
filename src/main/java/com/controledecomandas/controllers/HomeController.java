@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -28,6 +29,10 @@ public class HomeController implements Initializable {
 
     @FXML
     private BorderPane borderPane;
+
+    @FXML
+    private Group groupNavsAdmin;
+
     private Pane view;
 
 
@@ -45,13 +50,28 @@ public class HomeController implements Initializable {
         borderPane.setCenter(view);
     }
 
+    @FXML
+    public void toggleMyAccount() {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("FXMLMyAccount");
+        borderPane.setCenter(view);
+    }
 
+    @FXML
+    public void toggleBartable() {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("FXMLTableViewBartable");
+        borderPane.setCenter(view);
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
+        toggleOrders();
+        User user = UserSession.getInstace(new User()).getUser();
+        if(!user.getAccess()) {
+            groupNavsAdmin.setDisable(true);
+            groupNavsAdmin.setVisible(true);
+        }
     }
 }
