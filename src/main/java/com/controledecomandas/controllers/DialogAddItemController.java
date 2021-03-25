@@ -1,10 +1,8 @@
 package com.controledecomandas.controllers;
 
-import com.controledecomandas.database.dao.BartableDao;
 import com.controledecomandas.database.dao.ItemDao;
-import com.controledecomandas.models.Bartable;
 import com.controledecomandas.models.Item;
-import com.controledecomandas.models.Order;
+import com.controledecomandas.textFieldsValidators.NumberField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,9 +11,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class DialogAddItemController implements Initializable {
 
@@ -24,7 +22,7 @@ public class DialogAddItemController implements Initializable {
     private ListView<Item> listViewItems;
 
     @FXML
-    private TextField textFieldQuantity;
+    private NumberField textFieldQuantity;
 
     @FXML
     private Label labelItem;
@@ -39,11 +37,16 @@ public class DialogAddItemController implements Initializable {
 
     private List<Item> itemList;
 
+    private boolean isUpdate = false;
 
+
+    public void setUpdate(boolean update) {
+        isUpdate = update;
+    }
 
     @FXML
     public void handleButtonConfirm() {
-        System.out.println("confirm");
+
         item.setQuantity(Integer.parseInt(textFieldQuantity.getText()));
 
         buttonConfirmCheck = true;
@@ -65,6 +68,15 @@ public class DialogAddItemController implements Initializable {
 
     public void setItem(Item item) {
         this.item = item;
+        if(isUpdate) {
+            this.textFieldQuantity.setText(String.valueOf(item.getQuantity()));
+            Item itemFiltred = itemList.stream().filter(i -> i.getId() == item.getId()).collect(Collectors.toList()).get(0);
+            int index = itemList.indexOf(itemFiltred);
+            listViewItems.scrollTo(index);
+            listViewItems.getSelectionModel().select(index);
+            listViewItems.setMouseTransparent( true );
+            listViewItems.setFocusTraversable( false );
+        }
     }
 
     @FXML

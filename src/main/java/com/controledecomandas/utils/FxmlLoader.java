@@ -14,7 +14,7 @@ public class FxmlLoader {
 
             view = new FXMLLoader().load(getClass().getResource("/fxml/" + fileName + ".fxml"));
         } catch (Exception e) {
-            System.out.println("No page " + fileName + " please check FXMLLoader");
+            System.out.println(e.getMessage());
         }
 
         return view;

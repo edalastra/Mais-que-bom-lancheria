@@ -10,6 +10,9 @@ public class Item {
     private String description;
     private String maker;
     private int quantity;
+    private BigDecimal totalPrice;
+
+
 
     public int getId() {
         return id;
@@ -62,6 +65,11 @@ public class Item {
     public int getQuantity() {
         return quantity;
     }
+
+    public BigDecimal getTotalPrice() {
+        return price.multiply(new BigDecimal(quantity));
+    }
+
 
     @Override
     public String toString() {

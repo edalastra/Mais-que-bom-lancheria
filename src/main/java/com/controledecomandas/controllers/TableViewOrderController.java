@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,7 +24,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class OrderController implements Initializable {
+public class TableViewOrderController implements Initializable {
 
     @FXML
     private TableView<Item> tableViewItems;
@@ -45,6 +46,9 @@ public class OrderController implements Initializable {
 
     @FXML
     private TableColumn<Item, String> columnItemCategory;
+
+    @FXML
+    private TableColumn<Item, Integer> columnTotalPrice;
 
     @FXML
     private TableColumn<Item, BigDecimal> columnItemPrice;
@@ -77,19 +81,60 @@ public class OrderController implements Initializable {
 
     @FXML
     public void handleButtonAddItem() throws IOException, SQLException {
-        int orderId = tableViewOrders.getSelectionModel().getSelectedItem().getId();
+        Order order = tableViewOrders.getSelectionModel().getSelectedItem();
         Item item = new Item();
 
-        boolean buttonConfirmedClicked = this.showFXMLAnchorPaneAddItemDialog(item);
+        boolean buttonConfirmedClicked = this.showFXMLAnchorPaneAddItemDialog(item, false);
         if(buttonConfirmedClicked) {
-            boolean inserted = itemDao.associateToOrder(item.getId(), orderId, item.getQuantity());
-            if(inserted){
-                System.out.println("tudo certo");
+            try {
+                boolean inserted = orderDao.associateItem(item.getId(), order.getId(), item.getQuantity());
+                selectOrderTableView(order);
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Erro! " + e.getMessage());
+                alert.show();
             }
-            loadTableOrders();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Erro");
+            alert.show();
+        }
+    }
+
+    @FXML
+    public void handleButtonUpdateItem() throws IOException, SQLException {
+        Item item = tableViewItems.getSelectionModel().getSelectedItem();
+        Order order = tableViewOrders.getSelectionModel().getSelectedItem();
+        if (item != null && order != null) {
+            boolean buttonConfirmedClicked = showFXMLAnchorPaneAddItemDialog(item, true);
+            if(buttonConfirmedClicked) {
+                orderDao.updateItem(item.getId(), order.getId(), item.getQuantity());
+                selectOrderTableView(order);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um cliente na tabela!");
+            alert.show();
+        }
+    }
+
+    @FXML
+    public void handleButtonRemoveItem() throws IOException, SQLException {
+        Item item = tableViewItems.getSelectionModel().getSelectedItem();
+        Order order = tableViewOrders.getSelectionModel().getSelectedItem();
+        if (item != null) {
+            Alert alert =
+                    new Alert(Alert.AlertType.CONFIRMATION,
+                "Você tem certeza que deseja remover o item " + item.getQuantity() + " X " + item.getDescription() + " da comanda " + order.getId() + "?",
+                    ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                orderDao.removeItem(item.getId(), order.getId());
+                selectOrderTableView(order);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Por favor, escolha um cliente na tabela!");
             alert.show();
         }
     }
@@ -108,6 +153,8 @@ public class OrderController implements Initializable {
         columnItemDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         columnItemCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         columnItemPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        columnTotalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+
 
     }
 
@@ -121,14 +168,6 @@ public class OrderController implements Initializable {
         }
     }
 
-    private void selectItemTableView(Item order) throws SQLException {
-        if (order != null) {
-//            ItemDao itemDao = new ItemDao();
-//            List<Item> items = itemDao.listByOrder(order.getId());
-//            ObservableList obsItems = FXCollections.observableArrayList(items);
-//            tableViewItems.setItems(obsItems);
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -149,15 +188,6 @@ public class OrderController implements Initializable {
                 }
         );
 
-        tableViewItems.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    try {
-                        this.selectItemTableView((Item) newValue);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-                }
-        );
     }
 
     public boolean showFXMLAnchorPaneInsertOrderDialog(Order order) throws IOException {
@@ -179,18 +209,23 @@ public class OrderController implements Initializable {
     }
 
 
-    public boolean showFXMLAnchorPaneAddItemDialog(Item item) throws IOException {
+    public boolean showFXMLAnchorPaneAddItemDialog(Item item, boolean update) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(DialogOrderController.class.getResource("/fxml/FXMLDialogAddItem.fxml"));
         AnchorPane page = (AnchorPane) loader.load();
 
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("Adicionar item a comanda");
+        String windowTitle = "Adicionar item a comanda";
+        if (update) {
+            windowTitle = "Editar item na comanda";
+        }
+        dialogStage.setTitle(windowTitle);
         Scene scene = new Scene(page);
         dialogStage.setScene(scene);
 
         DialogAddItemController dialogController = loader.getController();
         dialogController.setDialogStage(dialogStage);
+        dialogController.setUpdate(update);
         dialogController.setItem(item);
 
         dialogStage.showAndWait();

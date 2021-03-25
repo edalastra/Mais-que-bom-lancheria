@@ -14,7 +14,6 @@ public class PostgresConnection {
             props.setProperty("user","postgres");
             props.setProperty("password","root");
             this.connection = DriverManager.getConnection(url, props);
-            System.out.println("connectou");
         } catch (SQLException e ) {
             System.out.println(e);
             return false;

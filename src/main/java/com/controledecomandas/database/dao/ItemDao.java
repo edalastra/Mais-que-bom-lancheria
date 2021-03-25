@@ -13,27 +13,64 @@ import java.util.List;
 
 public class ItemDao {
 
-    public boolean associateToOrder(int itemId, int orderId, int quantity) {
+
+    public boolean insert(Item item) throws SQLException {
         PostgresConnection postgresConnection = new PostgresConnection();
         boolean connected = postgresConnection.connect();
 
-        String sqlIsert = "INSERT INTO order_item(order_id, item_id, quantity) " +
-                "VALUES(?,?,?)";
+        String sqlInsert = "INSERT INTO item(description, maker, category, price, cost)" +
+                "VALUES(?,?,?,?,?)";
 
-        try(PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlIsert)) {
-            pstmt.setInt(1, orderId);
-            pstmt.setInt(2, itemId);
-            pstmt.setInt(3, quantity);
+        try(PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlInsert)) {
+            pstmt.setString(1, item.getDescription());
+            pstmt.setString(2, item.getMaker());
+            pstmt.setString(3, item.getCategory());
+            pstmt.setBigDecimal(4,item.getPrice());
+            pstmt.setBigDecimal(5, item.getCost());
 
             int rs = pstmt.executeUpdate();
-            if (rs == 1) {
+
+            if(rs == 1) {
                 return true;
             }
-
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            throw throwables;
+        } finally {
+            postgresConnection.desconnect();
         }
+
         return false;
+    }
+
+
+    public boolean update(Item item) throws SQLException {
+        PostgresConnection postgresConnection = new PostgresConnection();
+        boolean connected = postgresConnection.connect();
+
+        String sqlInsert = "UPDATE item SET description = ?, maker = ?, category = ?, price = ?, cost = ? " +
+                "WHERE id = ?";
+
+        try(PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlInsert)) {
+            pstmt.setString(1, item.getDescription());
+            pstmt.setString(2, item.getMaker());
+            pstmt.setString(3, item.getCategory());
+            pstmt.setBigDecimal(4,item.getPrice());
+            pstmt.setBigDecimal(5, item.getCost());
+            pstmt.setInt(6, item.getId());
+
+            int rs = pstmt.executeUpdate();
+
+            if(rs == 1) {
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throw throwables;
+        } finally {
+            postgresConnection.desconnect();
+        }
+
+        return false;
+
     }
 
     public List<Item> listByOrder(int orderId) throws SQLException {
@@ -60,8 +97,32 @@ public class ItemDao {
                 item.setPrice(rs.getBigDecimal("price"));
                 items.add(item);
             }
-
+        postgresConnection.desconnect();
         return items;
+    }
+
+    public boolean delete(Item item) throws SQLException {
+        PostgresConnection postgresConnection = new PostgresConnection();
+        boolean connected = postgresConnection.connect();
+
+        String sqlDelete = "DELETE FROM item WHERE id = ?";
+
+        try(PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlDelete)) {
+            pstmt.setInt(1, item.getId());
+
+            int rs = pstmt.executeUpdate();
+
+            if(rs == 1) {
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throw throwables;
+        } finally {
+            postgresConnection.desconnect();
+        }
+
+        return false;
+
     }
 
 
@@ -94,4 +155,7 @@ public class ItemDao {
 
         return itemList;
     }
+
+
+
 }

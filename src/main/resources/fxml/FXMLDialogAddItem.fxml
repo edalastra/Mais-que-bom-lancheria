@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.controledecomandas.textFieldsValidators.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -35,11 +36,11 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="textFieldQuantity" prefHeight="25.0" prefWidth="31.0">
+            <NumberField fx:id="textFieldQuantity" prefHeight="25.0" prefWidth="31.0">
                <HBox.margin>
                   <Insets right="40.0" />
                </HBox.margin>
-            </TextField>
+            </NumberField>
             <Button fx:id="handleButtonConfirm" mnemonicParsing="false" onAction="#handleButtonConfirm" text="Adicionar">
                <HBox.margin>
                   <Insets right="20.0" />

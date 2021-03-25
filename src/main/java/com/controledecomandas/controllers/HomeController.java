@@ -38,11 +38,20 @@ public class HomeController implements Initializable {
         borderPane.setCenter(view);
     }
 
+    @FXML
+    public void toggleFoods() {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("FXMLTableViewItem");
+        borderPane.setCenter(view);
+    }
+
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
 
     }
 }
