@@ -16,7 +16,7 @@
 
 
 <?import com.controledecomandas.textFieldsValidators.CurrencyField?>
-<AnchorPane fx:controller="com.controledecomandas.controllers.DialogInsertUserController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="com.controledecomandas.controllers.Dialogs.DialogInsertUserController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="50.0" layoutY="41.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="600.0">
          <columnConstraints>

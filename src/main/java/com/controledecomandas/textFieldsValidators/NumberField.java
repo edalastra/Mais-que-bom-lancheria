@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 
 public class NumberField extends TextField {
 
+
     public NumberField() {
         this.setPromptText("Entre somente com números");
     }
@@ -13,6 +14,17 @@ public class NumberField extends TextField {
         if(string.matches("[0-9]") || string.isEmpty()) {
             super.replaceText(i, i1, string);
         }
+    }
+
+    public int getValue() {
+        if(!super.getText().equals("")) {
+            return Integer.parseInt(super.getText());
+        }
+        return 0;
+    }
+
+    public void setValue(int value) {
+        super.setText(String.valueOf(value));
     }
 
     @Override

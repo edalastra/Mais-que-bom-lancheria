@@ -1,4 +1,4 @@
-package com.controledecomandas.controllers;
+package com.controledecomandas.controllers.Dialogs;
 
 import com.controledecomandas.models.Item;
 import com.controledecomandas.textFieldsValidators.CurrencyField;

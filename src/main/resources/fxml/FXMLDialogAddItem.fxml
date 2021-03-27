@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="529.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.DialogAddItemController">
+<AnchorPane prefHeight="529.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.Dialogs.DialogAddItemController">
     <children>
         <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="154.0" layoutY="32.0" prefHeight="17.0" prefWidth="457.0" text="Adicionar item a comanda">
             <font>

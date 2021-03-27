@@ -1,4 +1,4 @@
-package com.controledecomandas.controllers;
+package com.controledecomandas.controllers.Dialogs;
 
 import com.controledecomandas.database.dao.ItemDao;
 import com.controledecomandas.models.Item;

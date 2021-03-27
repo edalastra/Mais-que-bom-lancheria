@@ -1,7 +1,8 @@
 package com.controledecomandas.controllers;
 
+import com.controledecomandas.controllers.Dialogs.DialogInsertUserController;
+import com.controledecomandas.controllers.Dialogs.DialogOrderController;
 import com.controledecomandas.database.dao.UserDao;
-import com.controledecomandas.models.Item;
 import com.controledecomandas.models.User;
 import com.controledecomandas.models.UserSession;
 import javafx.fxml.FXML;

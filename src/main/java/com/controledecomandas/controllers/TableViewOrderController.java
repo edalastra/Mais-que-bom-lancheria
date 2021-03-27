@@ -1,5 +1,7 @@
 package com.controledecomandas.controllers;
 
+import com.controledecomandas.controllers.Dialogs.DialogAddItemController;
+import com.controledecomandas.controllers.Dialogs.DialogOrderController;
 import com.controledecomandas.database.dao.ItemDao;
 import com.controledecomandas.database.dao.OrderDao;
 import com.controledecomandas.models.*;
@@ -33,7 +35,7 @@ public class TableViewOrderController implements Initializable {
     private TableColumn<Order, Integer> columnOrderId;
 
     @FXML
-    private TableColumn<Order, Bartable> columnOrderBartable;
+    private TableColumn<Order, BartableController> columnOrderBartable;
 
     @FXML
     private TableView<Order> tableViewOrders;
@@ -142,7 +144,7 @@ public class TableViewOrderController implements Initializable {
 
     public void loadTableOrders() throws IOException, SQLException {
         columnOrderId.setCellValueFactory(new PropertyValueFactory<Order, Integer>("id"));
-        columnOrderBartable.setCellValueFactory(new PropertyValueFactory<Order, Bartable>("bartable"));
+        columnOrderBartable.setCellValueFactory(new PropertyValueFactory<Order, BartableController>("bartable"));
 
         List<Order> orders = orderDao.listByWorker(UserSession.getInstace(new User()).getUser().getId());
         ObservableList<Order> obsOrders;

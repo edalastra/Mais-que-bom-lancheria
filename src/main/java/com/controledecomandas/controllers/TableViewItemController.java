@@ -1,9 +1,9 @@
 package com.controledecomandas.controllers;
 
+import com.controledecomandas.controllers.Dialogs.DialogInsertItemController;
+import com.controledecomandas.controllers.Dialogs.DialogOrderController;
 import com.controledecomandas.database.dao.ItemDao;
 import com.controledecomandas.models.Item;
-import com.controledecomandas.models.Order;
-import com.controledecomandas.textFieldsValidators.CurrencyField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,7 +20,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class TableViewItemController implements Initializable {

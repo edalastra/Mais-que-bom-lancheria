@@ -60,7 +60,7 @@ public class HomeController implements Initializable {
     @FXML
     public void toggleBartable() {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("FXMLTableViewBartable");
+        Pane view = object.getPage("FXMLBartable");
         borderPane.setCenter(view);
     }
 
