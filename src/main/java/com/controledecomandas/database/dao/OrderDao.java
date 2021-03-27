@@ -7,7 +7,9 @@ import com.controledecomandas.models.Order;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OrderDao {
@@ -46,6 +48,41 @@ public class OrderDao {
         return false;
     }
 
+    public List<Order> list()  {
+        PostgresConnection postgresConnection = new PostgresConnection();
+        boolean connected = postgresConnection.connect();
+
+        String sqlQuery = "SELECT o.id, o.open_at, b.id as bartable_id, b.capacity as bartable_capacity FROM orders o " +
+                "JOIN bartable b ON b.id = o.bartable_id " +
+                "JOIN bartable_worker bw ON bw.bartable_id = b.id " +
+                "JOIN users u ON u.id = bw.user_id " +
+                "WHERE close_at is NULL";
+
+        PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlQuery);
+        List<Order> orders = new ArrayList<>();
+
+        try(ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Order order = new Order();
+                order.setId(rs.getInt("id"));
+                order.setOpenAt(rs.getTimestamp("open_at"));
+                Bartable bartable = new Bartable();
+                bartable.setId(rs.getInt("bartable_id"));
+                bartable.setCapacity(rs.getInt("bartable_capacity"));
+                order.setBartable(bartable);
+
+                orders.add(order);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            postgresConnection.desconnect();
+        }
+
+        return orders;
+    }
+
     public List<Order> listByWorker(int workerId) throws SQLException {
         PostgresConnection postgresConnection = new PostgresConnection();
         boolean connected = postgresConnection.connect();
@@ -54,7 +91,7 @@ public class OrderDao {
                 "JOIN bartable b ON b.id = o.bartable_id " +
                 "JOIN bartable_worker bw ON bw.bartable_id = b.id " +
                 "JOIN users u ON u.id = bw.user_id " +
-                "WHERE u.id = ?;";
+                "WHERE u.id = ? AND close_at is NULL;";
 
         PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlQuery);
 
@@ -144,4 +181,30 @@ public class OrderDao {
         }
         return false;
     }
+
+
+    public boolean close(Order order) {
+        PostgresConnection postgresConnection = new PostgresConnection();
+        boolean connected = postgresConnection.connect();
+
+        Date today = new Date();
+        order.setCloseAt(new Timestamp(today.getTime()));
+
+        String sqlDelete = "UPDATE orders SET close_at = ? WHERE id = ?";
+        try (PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlDelete)) {
+            pstmt.setTimestamp(1, order.getCloseAt());
+            pstmt.setInt(2, order.getId());
+            int rs = pstmt.executeUpdate();
+            if (rs == 1) {
+                return true;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            postgresConnection.desconnect();
+        }
+        return false;
+    }
 }
+

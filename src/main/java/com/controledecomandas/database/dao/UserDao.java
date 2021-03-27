@@ -3,6 +3,7 @@ package com.controledecomandas.database.dao;
 import com.controledecomandas.database.PostgresConnection;
 import com.controledecomandas.models.Item;
 import com.controledecomandas.models.User;
+import com.controledecomandas.models.UserSession;
 import com.controledecomandas.utils.GenerateHash;
 
 import java.math.BigDecimal;
@@ -10,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
@@ -79,6 +82,39 @@ public class UserDao {
 
     }
 
+    public List<User> list()  {
+        PostgresConnection postgresConnection = new PostgresConnection();
+        boolean connected = postgresConnection.connect();
+
+        String sqlQuery = "SELECT * FROM users WHERE NOT id = ? ";
+
+        List<User> userList = new ArrayList();
+        try (PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlQuery)) {
+            pstmt.setInt(1, UserSession.getInstace(new User()).getUser().getId());
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setEmail(rs.getString("email"));
+                user.setAccess(rs.getBoolean("is_admin"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setTelephone(rs.getString("telephone"));
+                user.setSalary(rs.getBigDecimal("salary"));
+                user.setAddress(rs.getString("address"));
+                user.setZipcode(rs.getString("zipcode"));
+                userList.add(user);
+            }
+
+        }  catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            postgresConnection.desconnect();
+        }
+        return userList;
+    }
+
     public boolean update(User user) throws SQLException {
         PostgresConnection postgresConnection = new PostgresConnection();
         boolean connected = postgresConnection.connect();
@@ -145,5 +181,6 @@ public class UserDao {
 
         return user;
     }
+
 
 }

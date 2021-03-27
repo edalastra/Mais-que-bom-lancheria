@@ -18,7 +18,7 @@
                <children>
                   <VBox alignment="CENTER" layoutX="38.0" layoutY="54.0" prefHeight="398.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView fx:id="tableViewOrders" prefHeight="673.0" prefWidth="235.0" style="-fx-background-color: #F2EFEB;">
+                        <TableView fx:id="tableViewOrders" prefHeight="442.0" prefWidth="175.0" style="-fx-background-color: #F2EFEB;">
                           <columns>
                             <TableColumn fx:id="columnOrderId" prefWidth="75.0" text="Nº" />
                             <TableColumn fx:id="columnOrderBartable" prefWidth="75.0" text="Mesa" />
@@ -27,7 +27,20 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button mnemonicParsing="false" onAction="#handleButtonInsertOrder" stylesheets="@../css/global.css" text="Nova Comanda" />
+                        <HBox alignment="CENTER" prefHeight="32.0" prefWidth="175.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#handleButtonInsertOrder" stylesheets="@../css/global.css" text="Nova">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#handleButtonCloseOrder" stylesheets="@../css/global.css" text="Fechar">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </children>

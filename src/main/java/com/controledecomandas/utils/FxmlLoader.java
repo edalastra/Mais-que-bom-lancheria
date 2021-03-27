@@ -11,10 +11,9 @@ public class FxmlLoader {
 
     public Pane getPage(String fileName) {
         try {
-
             view = new FXMLLoader().load(getClass().getResource("/fxml/" + fileName + ".fxml"));
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return view;

@@ -5,6 +5,7 @@ import com.controledecomandas.utils.GenerateHash;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 
 public class User {
@@ -21,6 +22,12 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public String getFullName() {
+
+        return firstName.substring(0, 1).toUpperCase() + firstName.substring(1) + " " +
+                lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
     }
 
     public void setId(int id) {

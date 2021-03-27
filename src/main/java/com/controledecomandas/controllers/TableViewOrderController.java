@@ -5,6 +5,7 @@ import com.controledecomandas.controllers.Dialogs.DialogOrderController;
 import com.controledecomandas.database.dao.ItemDao;
 import com.controledecomandas.database.dao.OrderDao;
 import com.controledecomandas.models.*;
+import com.controledecomandas.textFieldsValidators.CurrencyField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -55,6 +56,10 @@ public class TableViewOrderController implements Initializable {
     @FXML
     private TableColumn<Item, BigDecimal> columnItemPrice;
 
+    private List<Order> orders;
+
+    private List<Item> items;
+
     private OrderDao orderDao = new OrderDao();
 
     private ItemDao itemDao = new ItemDao();
@@ -76,6 +81,39 @@ public class TableViewOrderController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erro");
                 alert.setHeaderText(e.getMessage());
+                alert.showAndWait();
+            }
+        }
+    }
+
+    @FXML
+    public void handleButtonCloseOrder() throws IOException {
+        Order order = tableViewOrders.getSelectionModel().getSelectedItem();
+
+        if (order != null) {
+            Alert alertConfirmation =
+                    new Alert(Alert.AlertType.CONFIRMATION,
+                            "Valor total da comanda: R$" + items
+                                    .stream()
+                                    .map(Item::getTotalPrice)
+                                    .reduce(BigDecimal::add)
+                                    .get(),
+                            ButtonType.YES, ButtonType.CANCEL);
+            alertConfirmation.showAndWait();
+            if (alertConfirmation.getResult() == ButtonType.YES) {
+                try {
+                    boolean inserted = orderDao.close(order);
+                    loadTableOrders();
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erro");
+                    alert.setHeaderText(e.getMessage());
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText("Selecione uma comanda na tabela");
                 alert.showAndWait();
             }
         }
@@ -145,8 +183,14 @@ public class TableViewOrderController implements Initializable {
     public void loadTableOrders() throws IOException, SQLException {
         columnOrderId.setCellValueFactory(new PropertyValueFactory<Order, Integer>("id"));
         columnOrderBartable.setCellValueFactory(new PropertyValueFactory<Order, BartableController>("bartable"));
+        User session = UserSession.getInstace(new User()).getUser();
+        if( session.getAccess() ) {
+            orders = orderDao.list();
+        } else {
+            orders = orderDao.listByWorker(session.getId());
 
-        List<Order> orders = orderDao.listByWorker(UserSession.getInstace(new User()).getUser().getId());
+        }
+
         ObservableList<Order> obsOrders;
         obsOrders = FXCollections.observableArrayList(orders);
         tableViewOrders.setItems(obsOrders);
@@ -164,7 +208,7 @@ public class TableViewOrderController implements Initializable {
     private void selectOrderTableView(Order order) throws SQLException {
         if (order != null) {
             ItemDao itemDao = new ItemDao();
-            List<Item> items = itemDao.listByOrder(order.getId());
+             items = itemDao.listByOrder(order.getId());
             ObservableList obsItems = FXCollections.observableArrayList(items);
             tableViewItems.setItems(obsItems);
         }

@@ -64,6 +64,13 @@ public class HomeController implements Initializable {
         borderPane.setCenter(view);
     }
 
+    @FXML
+    public void toggleUsers() {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("FXMLUsers");
+        borderPane.setCenter(view);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

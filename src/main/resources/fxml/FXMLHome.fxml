@@ -84,7 +84,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Button>
-                  <Button layoutY="76.0" mnemonicParsing="false" onAction="#toggleFoods" prefHeight="52.0" prefWidth="179.0" stylesheets="@../css/global.css" text="Funcionários">
+                  <Button layoutY="76.0" mnemonicParsing="false" onAction="#toggleUsers" prefHeight="52.0" prefWidth="179.0" stylesheets="@../css/global.css" text="Funcionários">
                      <graphic>
                         <ImageView fitHeight="63.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                            <image>

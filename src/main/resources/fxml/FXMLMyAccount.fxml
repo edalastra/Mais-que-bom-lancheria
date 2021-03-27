@@ -10,13 +10,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane fx:controller="com.controledecomandas.controllers.MyAccountController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.MyAccountController">
    <children>
-      <GridPane layoutX="28.0" layoutY="53.0" prefHeight="295.0" prefWidth="545.0">
+      <GridPane layoutX="102.0" layoutY="48.0" prefHeight="295.0" prefWidth="397.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="313.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="232.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="355.0" minWidth="10.0" prefWidth="174.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="223.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -37,7 +36,7 @@
                   <Label fx:id="labelUserSalary" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Nome:">
                      <font>
@@ -50,7 +49,7 @@
                   <Label fx:id="labelUserName" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="98.0" prefWidth="286.0" GridPane.rowIndex="1">
+            <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="286.0" GridPane.rowIndex="1">
                <children>
                   <Label text="Telefone:">
                      <font>
@@ -76,7 +75,7 @@
                   <Label fx:id="labelUserEmail" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Label text="Endereço:">
                      <font>
@@ -91,24 +90,21 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Label text="Senha:">
+                  <Label text="Tipo:">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" text="Alterar Senha" />
+                  <Label fx:id="labelUserAddress1" prefHeight="17.0" prefWidth="0.0" />
                </children>
             </HBox>
          </children>
       </GridPane>
-      <Label layoutX="266.0" layoutY="22.0" text="Minha Conta">
+      <Label layoutX="260.0" layoutY="28.0" text="Minha Conta">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="245.0" onAction="#handleButtonUpdate" layoutY="348.0" mnemonicParsing="false" text="Alterar Informações" />
+      <Button layoutX="240.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleButtonUpdate" text="Alterar Informações" />
    </children>
 </Pane>
