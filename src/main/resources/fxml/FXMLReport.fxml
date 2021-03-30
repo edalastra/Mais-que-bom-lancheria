@@ -37,12 +37,7 @@
                         <ToggleGroup fx:id="period" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="semanal" toggleGroup="$period">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="mensal" toggleGroup="$period">
+                  <RadioButton mnemonicParsing="false" text="personalizado" toggleGroup="$period">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -82,7 +77,7 @@
          </children>
       </VBox>
       <Button layoutX="274.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonGenerate" text="Gerar" />
-      <DatePicker fx:id="dpInit" layoutX="296.0" layoutY="167.0" promptText="De" />
-      <DatePicker fx:id="dpEnd" layoutX="296.0" layoutY="215.0" promptText="Até" />
+      <DatePicker fx:id="dpInit" layoutX="296.0" layoutY="167.0" promptText="Selecione o dia" />
+      <DatePicker fx:id="dpEnd" layoutX="296.0" layoutY="215.0" promptText="Até" visible="false" />
    </children>
 </Pane>

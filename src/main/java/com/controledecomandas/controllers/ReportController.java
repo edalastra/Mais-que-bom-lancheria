@@ -1,27 +1,30 @@
 package com.controledecomandas.controllers;
 
 import com.controledecomandas.database.PostgresConnection;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ToggleGroup;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 
 import java.io.File;
+import java.net.URL;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ReportController  {
+public class ReportController implements Initializable {
 
     @FXML
     private ToggleGroup period;
@@ -36,13 +39,13 @@ public class ReportController  {
     @FXML
     public void handleButtonGenerate(ActionEvent event) throws JRException, SQLException, ParseException {
         Connection conn = PostgresConnection.createConnection();
-        System.out.println(dpInit.getEditor().getText());
+        System.out.println();
 
         HashMap parameters = new HashMap();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        parameters.put("period-init",dateFormat.parse("29/03/2021"));
-        parameters.put("period-end", dateFormat.parse("29/03/2021"));
+        parameters.put("period-init",dateFormat.parse(dpInit.getEditor().getText()));
+        parameters.put("period-end", dateFormat.parse(dpEnd.getEditor().getText()));
 
         JasperPrint jp = JasperFillManager.fillReport("src/main/resources/report/report_mqb.jasper", parameters, conn);
         JasperViewer viewer = new JasperViewer(jp, false);
@@ -51,4 +54,16 @@ public class ReportController  {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        period.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
+               RadioButton periodSelected = (RadioButton) period.getSelectedToggle();
+               boolean longPeriod = periodSelected.getText().equals("personalizado");
+                    dpEnd.setVisible(longPeriod);
+                    dpInit.setPromptText(longPeriod ? "De" : "Selecione o dia");
+            }
+        });
+    }
 }
