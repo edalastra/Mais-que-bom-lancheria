@@ -26,7 +26,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private AnchorPane anchorPane;
+    private BorderPane borderPane;
 
     @FXML
     private TextField loginEmail;
@@ -40,7 +40,7 @@ public class LoginController implements Initializable {
             User user = userDao.login(loginEmail.getText(), loginPassword.getText());
             UserSession.getInstace(user);
             BorderPane home = (BorderPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLHome.fxml"));
-            anchorPane.getChildren().setAll(home);
+            borderPane.getChildren().setAll(home);
 
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -55,7 +55,7 @@ public class LoginController implements Initializable {
         try {
             if(userDao.countAdminUsers() == 0) {
                 AnchorPane insertUser = (AnchorPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLInsertUser.fxml"));
-                anchorPane.getChildren().setAll(insertUser);
+                borderPane.getChildren().setAll(insertUser);
             }
         } catch (SQLException | IOException throwables) {
             System.out.println(throwables);

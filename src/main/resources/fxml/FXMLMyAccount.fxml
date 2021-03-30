@@ -105,6 +105,6 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="240.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleButtonUpdate" text="Alterar Informações" />
+      <Button layoutX="239.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleButtonUpdate" text="Alterar Informações" />
    </children>
 </Pane>

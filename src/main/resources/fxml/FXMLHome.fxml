@@ -23,9 +23,14 @@
                   <Image url="@../img/Mais%20que%20Bomw-white.png" />
                </image>
                <VBox.margin>
-                  <Insets bottom="50.0" />
+                  <Insets />
                </VBox.margin>
             </ImageView>
+            <Button mnemonicParsing="false" onAction="#handleButtonLogout" stylesheets="@../css/global.css" text="Sair">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
             <Button mnemonicParsing="false" onAction="#toggleOrders" prefHeight="52.0" prefWidth="179.0" stylesheets="@../css/global.css" text="Comandas">
                <VBox.margin>
                   <Insets bottom="5.0" top="5.0" />
@@ -96,7 +101,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </padding>
                   </Button>
-                  <Button layoutY="152.0" mnemonicParsing="false" onAction="#toggleFoods" prefHeight="52.0" prefWidth="179.0" stylesheets="@../css/global.css" text="Financeiro">
+                  <Button layoutY="152.0" mnemonicParsing="false" onAction="#toggleReport" prefHeight="52.0" prefWidth="179.0" stylesheets="@../css/global.css" text="Financeiro">
                      <graphic>
                         <ImageView fitHeight="63.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                            <image>

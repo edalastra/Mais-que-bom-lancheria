@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
@@ -69,6 +70,22 @@ public class HomeController implements Initializable {
         FxmlLoader object = new FxmlLoader();
         Pane view = object.getPage("FXMLUsers");
         borderPane.setCenter(view);
+    }
+
+    @FXML
+    public void toggleReport() {
+        FxmlLoader object = new FxmlLoader();
+        Pane view = object.getPage("FXMLReport");
+        borderPane.setCenter(view);
+    }
+
+
+
+    @FXML
+    public void handleButtonLogout() throws IOException {
+        UserSession.getInstace(new User()).cleanUserSession();
+        BorderPane login = (BorderPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLLogin.fxml"));
+        borderPane.getChildren().setAll(login);
     }
 
 

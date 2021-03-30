@@ -22,6 +22,22 @@ public class PostgresConnection {
         return true;
     }
 
+    public static Connection createConnection() {
+        Connection connection;
+        try {
+            String url = "jdbc:postgresql://localhost:5432/mqb";
+            Properties props = new Properties();
+            props.setProperty("user","postgres");
+            props.setProperty("password","root");
+            connection = DriverManager.getConnection(url, props);
+        } catch (SQLException e ) {
+            System.out.println(e);
+            return null;
+        }
+
+        return connection;
+    }
+
     public boolean desconnect()  {
         try {
             if(this.connection.isClosed() == false) {
