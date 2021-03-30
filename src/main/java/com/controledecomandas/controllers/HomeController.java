@@ -29,6 +29,9 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     @FXML
+    AnchorPane anchorPane;
+
+    @FXML
     private BorderPane borderPane;
 
     @FXML
@@ -40,42 +43,42 @@ public class HomeController implements Initializable {
     @FXML
     public void toggleOrders() {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("FXMLTableViewOrders");
+        AnchorPane view = object.getPage("FXMLTableViewOrders");
         borderPane.setCenter(view);
     }
 
     @FXML
     public void toggleFoods() {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("FXMLTableViewItem");
+        AnchorPane view = object.getPage("FXMLTableViewItem");
         borderPane.setCenter(view);
     }
 
     @FXML
     public void toggleMyAccount() {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("FXMLMyAccount");
+        AnchorPane view = object.getPage("FXMLMyAccount");
         borderPane.setCenter(view);
     }
 
     @FXML
     public void toggleBartable() {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("FXMLBartable");
+        AnchorPane view = object.getPage("FXMLBartable");
         borderPane.setCenter(view);
     }
 
     @FXML
     public void toggleUsers() {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("FXMLUsers");
+        AnchorPane view = object.getPage("FXMLUsers");
         borderPane.setCenter(view);
     }
 
     @FXML
     public void toggleReport() {
         FxmlLoader object = new FxmlLoader();
-        Pane view = object.getPage("FXMLReport");
+        AnchorPane view = object.getPage("FXMLReport");
         borderPane.setCenter(view);
     }
 
@@ -84,8 +87,8 @@ public class HomeController implements Initializable {
     @FXML
     public void handleButtonLogout() throws IOException {
         UserSession.getInstace(new User()).cleanUserSession();
-        BorderPane login = (BorderPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLLogin.fxml"));
-        borderPane.getChildren().setAll(login);
+        AnchorPane login = (AnchorPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLLogin.fxml"));
+        anchorPane.getChildren().setAll(login);
     }
 
 

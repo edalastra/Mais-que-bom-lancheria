@@ -11,11 +11,14 @@ import com.controledecomandas.models.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class LoginController implements Initializable {
 
@@ -26,7 +29,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private BorderPane borderPane;
+    private AnchorPane anchorPane;
 
     @FXML
     private TextField loginEmail;
@@ -38,9 +41,13 @@ public class LoginController implements Initializable {
     public void login() {
         try {
             User user = userDao.login(loginEmail.getText(), loginPassword.getText());
+            System.out.println(user.getAccess());
             UserSession.getInstace(user);
-            BorderPane home = (BorderPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLHome.fxml"));
-            borderPane.getChildren().setAll(home);
+            Stage stage = (Stage) anchorPane.getScene().getWindow();
+            Parent home = (AnchorPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLHome.fxml"));
+            Scene scene = new Scene(home, 900, 700);
+            stage.setScene(scene);
+            stage.show();
 
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -55,7 +62,7 @@ public class LoginController implements Initializable {
         try {
             if(userDao.countAdminUsers() == 0) {
                 AnchorPane insertUser = (AnchorPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLInsertUser.fxml"));
-                borderPane.getChildren().setAll(insertUser);
+                anchorPane.getChildren().setAll(insertUser);
             }
         } catch (SQLException | IOException throwables) {
             System.out.println(throwables);

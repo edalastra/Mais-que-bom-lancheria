@@ -93,11 +93,11 @@ public class TableViewOrderController implements Initializable {
         if (order != null) {
             Alert alertConfirmation =
                     new Alert(Alert.AlertType.CONFIRMATION,
-                            "Valor total da comanda: R$" + items
+                            !items.isEmpty() ? "Valor total da comanda: R$" + items
                                     .stream()
                                     .map(Item::getTotalPrice)
                                     .reduce(BigDecimal::add)
-                                    .get(),
+                                    .get() : "",
                             ButtonType.YES, ButtonType.CANCEL);
             alertConfirmation.showAndWait();
             if (alertConfirmation.getResult() == ButtonType.YES) {

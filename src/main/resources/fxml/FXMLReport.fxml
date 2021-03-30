@@ -7,27 +7,27 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.ReportController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.ReportController">
    <children>
-      <Label layoutX="262.0" layoutY="14.0" text="Gerar relatório" />
-      <GridPane layoutX="224.0" layoutY="115.0" prefHeight="32.0" prefWidth="376.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="80.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="519.0" minWidth="10.0" prefWidth="296.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <Label layoutX="272.0" layoutY="24.0" prefHeight="17.0" prefWidth="83.0" text="Gerar relatório" AnchorPane.rightAnchor="245.0" />
+      <GridPane layoutX="300.0" layoutY="133.0" prefHeight="31.0" prefWidth="260.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="92.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="519.0" minWidth="10.0" prefWidth="238.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
             <Label text="Periodo:" />
-            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="439.0" GridPane.columnIndex="1">
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="202.0" GridPane.columnIndex="1">
                <children>
                   <RadioButton mnemonicParsing="false" selected="true" text="diário">
                      <HBox.margin>
@@ -46,7 +46,7 @@
             </HBox>
          </children>
       </GridPane>
-      <VBox layoutX="14.0" layoutY="115.0" prefHeight="200.0" prefWidth="250.0">
+      <VBox layoutX="24.0" layoutY="125.0" prefHeight="200.0" prefWidth="161.0">
          <children>
             <Label text="Incluir:" />
             <CheckBox fx:id="cbFaturamento" mnemonicParsing="false" text="Faturamento">
@@ -76,8 +76,8 @@
             </CheckBox>
          </children>
       </VBox>
-      <Button layoutX="274.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonGenerate" text="Gerar" />
-      <DatePicker fx:id="dpInit" layoutX="296.0" layoutY="167.0" promptText="Selecione o dia" />
-      <DatePicker fx:id="dpEnd" layoutX="296.0" layoutY="215.0" promptText="Até" visible="false" />
+      <Button layoutX="284.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleButtonGenerate" text="Gerar" />
+      <DatePicker fx:id="dpInit" layoutX="306.0" layoutY="177.0" promptText="Selecione o dia" />
+      <DatePicker fx:id="dpEnd" layoutX="306.0" layoutY="225.0" promptText="Até" visible="false" />
    </children>
-</Pane>
+</AnchorPane>
