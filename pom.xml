@@ -30,6 +30,11 @@
             <artifactId>jasperreports</artifactId>
             <version>6.15.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.10</version>
+        </dependency>
 
     </dependencies>
     <build>
@@ -50,6 +55,9 @@
                 <version>0.0.1</version>
                 <configuration>
                     <mainClass>com.controledecomandas.App</mainClass>
+                    <options>
+                        <option>--add-opens=java.base/java.lang.reflect=com.jfoenix</option>
+                    </options>
                 </configuration>
             </plugin>
         </plugins>

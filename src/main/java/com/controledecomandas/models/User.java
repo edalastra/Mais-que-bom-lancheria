@@ -54,6 +54,10 @@ public class User {
         }
     }
 
+    public String getCargo() {
+        return access ? "Gerente" : "Funcionário";
+    }
+
     public boolean getAccess() {
         return access;
     }

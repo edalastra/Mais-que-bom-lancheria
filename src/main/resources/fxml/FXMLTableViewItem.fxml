@@ -89,6 +89,7 @@
                                     <Insets left="5.0" right="5.0" />
                                  </HBox.margin>
                               </Button>
+                              <Button mnemonicParsing="false" onAction="#handleButtonDelete" stylesheets="@../css/global.css" text="Remover" />
                            </children>
                         </HBox>
                      </children>

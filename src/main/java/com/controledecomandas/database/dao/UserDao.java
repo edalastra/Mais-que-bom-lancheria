@@ -6,7 +6,9 @@ import com.controledecomandas.models.User;
 import com.controledecomandas.models.UserSession;
 import com.controledecomandas.utils.GenerateHash;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -183,4 +185,28 @@ public class UserDao {
     }
 
 
+    public void updatePassword(User user, String oldPassword, String newPassword) throws  Exception {
+        PostgresConnection postgresConnection = new PostgresConnection();
+        postgresConnection.connect();
+
+        String sqlQuery = "SELECT * FROM  users  WHERE email=?";
+        PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlQuery);
+
+        pstmt.setString(1,user.getEmail());
+        ResultSet result = pstmt.executeQuery();
+        if(!result.next()
+                || !GenerateHash.generate(oldPassword).equals(result.getString("password"))) {
+            postgresConnection.desconnect();
+
+            throw new SQLException("Senha atual incorreta!");
+        }
+        String sqlUpdatePassword = "UPDATE users SET password = ? WHERE id = ?";
+
+        PreparedStatement pstmtUp = postgresConnection.createPrepedStatement(sqlUpdatePassword);
+            pstmtUp.setString(1, GenerateHash.generate(newPassword));
+            pstmtUp.setInt(2, user.getId());
+            pstmt.executeUpdate();
+            postgresConnection.desconnect();
+
+    }
 }

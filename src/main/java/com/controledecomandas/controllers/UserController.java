@@ -34,22 +34,16 @@ public class UserController implements Initializable {
     private TableColumn<User, String> columnName;
 
     @FXML
-    private Label labelUserSalary;
+    private TableColumn<User, String> columnEmail;
 
     @FXML
-    private Label labelUserName;
+    private TableColumn<User, String> columnTelephone;
 
     @FXML
-    private Label labelUserTelephone;
+    private TableColumn<User, String> columnAddress;
 
     @FXML
-    private Label labelUserEmail;
-
-    @FXML
-    private Label labelUserAddress;
-
-    @FXML
-    private Label labelUserAccess;
+    private TableColumn<User, String> columnAccess;
 
     private List<User> userList;
 
@@ -98,26 +92,21 @@ public class UserController implements Initializable {
 
     private void loadTableViewUsers() {
         columnName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        columnTelephone.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+        columnAccess.setCellValueFactory(new PropertyValueFactory<>("cargo"));
+        columnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+
         userList = userDao.list();
         ObservableList obsUserList = FXCollections.observableArrayList(userList);
         tableViewUsers.setItems(obsUserList);
 
     }
-    private void selectUserTableView(User user){
-        labelUserName.setText(user.getFirstName() + " " + user.getLastName());
-        labelUserEmail.setText(user.getEmail());
-        labelUserTelephone.setText(user.getTelephone());
-        labelUserAddress.setText(user.getAddress() + " - " + user.getZipcode());
-        labelUserSalary.setText("R$ " + user.getSalary());
-        labelUserAccess.setText(user.getAccess() ? "Gerente" : "Funcionário");
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadTableViewUsers();
-        tableViewUsers.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> this.selectUserTableView((User) newValue)
-        );
     }
 
 

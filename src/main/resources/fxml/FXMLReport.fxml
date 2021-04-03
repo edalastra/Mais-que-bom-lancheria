@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,71 +12,82 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.ReportController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F2EFEB;" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.ReportController">
    <children>
-      <Label layoutX="272.0" layoutY="24.0" prefHeight="17.0" prefWidth="83.0" text="Gerar relatório" AnchorPane.rightAnchor="245.0" />
-      <GridPane layoutX="300.0" layoutY="133.0" prefHeight="31.0" prefWidth="260.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="92.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="519.0" minWidth="10.0" prefWidth="238.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Periodo:" />
-            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="202.0" GridPane.columnIndex="1">
+            <Label alignment="CENTER" maxWidth="300.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="200.0" text="Gerar relatório" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Label>
+            <GridPane maxWidth="300.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="200.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="56.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="519.0" minWidth="10.0" prefWidth="156.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="diário">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <toggleGroup>
-                        <ToggleGroup fx:id="period" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="personalizado" toggleGroup="$period">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </RadioButton>
+                  <Label text="Periodo:" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="162.0" GridPane.columnIndex="1">
+                     <children>
+                        <JFXRadioButton selected="true" text="diário">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="period" />
+                           </toggleGroup>
+                           <selectedColor>
+                              <Color red="0.5490196347236633" green="0.10980392247438431" blue="0.0117647061124444" />
+                           </selectedColor>
+                        </JFXRadioButton>
+                        <JFXRadioButton text="personalizado" toggleGroup="$period">
+                           <selectedColor>
+                              <Color red="0.5490196347236633" green="0.10980392247438431" blue="0.0117647061124444" />
+                           </selectedColor>
+                        </JFXRadioButton>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-         </children>
-      </GridPane>
-      <VBox layoutX="24.0" layoutY="125.0" prefHeight="200.0" prefWidth="161.0">
-         <children>
-            <Label text="Incluir:" />
-            <CheckBox fx:id="cbFaturamento" mnemonicParsing="false" text="Faturamento">
+               <opaqueInsets>
+                  <Insets bottom="20.0" />
+               </opaqueInsets>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="50.0" />
                </VBox.margin>
-            </CheckBox>
-            <CheckBox fx:id="cbLucroBruto" mnemonicParsing="false" text="Lucro Bruto">
+            </GridPane>
+            <DatePicker fx:id="dpInit" maxWidth="300.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" promptText="Selecione o dia" styleClass="input">
+               <opaqueInsets>
+                  <Insets bottom="20.0" />
+               </opaqueInsets>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
-            </CheckBox>
-            <CheckBox fx:id="cbVendasPorGarcon" mnemonicParsing="false" text="Vendas por garçon">
+            </DatePicker>
+            <DatePicker fx:id="dpEnd" maxWidth="300.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" promptText="Até" styleClass="input" visible="false">
+               <opaqueInsets>
+                  <Insets bottom="20.0" />
+               </opaqueInsets>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
-            </CheckBox>
-            <CheckBox fx:id="cbTicketMedio" mnemonicParsing="false" text="Ticket Médio">
+            </DatePicker>
+            <Label fx:id="labelError" text="Selecione as datas" textFill="#8c1c03" visible="false" />
+            <Button maxWidth="300.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonGenerate" prefHeight="25.0" prefWidth="221.0" text="Gerar">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets top="60.0" />
                </VBox.margin>
-            </CheckBox>
-            <CheckBox fx:id="cbVendasProProduto" mnemonicParsing="false" text="Vendas por produto">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </CheckBox>
+            </Button>
          </children>
       </VBox>
-      <Button layoutX="284.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleButtonGenerate" text="Gerar" />
-      <DatePicker fx:id="dpInit" layoutX="306.0" layoutY="177.0" promptText="Selecione o dia" />
-      <DatePicker fx:id="dpEnd" layoutX="306.0" layoutY="225.0" promptText="Até" visible="false" />
    </children>
 </AnchorPane>

@@ -1,8 +1,9 @@
 package com.controledecomandas.textFieldsValidators;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.TextField;
 
-public class NumberField extends TextField {
+public class NumberField extends JFXTextField {
 
 
     public NumberField() {

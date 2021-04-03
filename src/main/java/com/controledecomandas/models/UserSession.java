@@ -22,7 +22,7 @@ public final class UserSession {
     }
 
     public void cleanUserSession() {
-       this.user = null;
+       instance = null;
     }
 
     @Override

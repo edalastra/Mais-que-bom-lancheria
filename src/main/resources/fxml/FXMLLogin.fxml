@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -56,27 +56,34 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Email" />
-                  <TextField fx:id="loginEmail" promptText="seu@email.com" stylesheets="@../css/global.css">
+                  <JFXTextField fx:id="loginEmail" alignment="CENTER" focusColor="#d9923b" labelFloat="true" promptText="Email">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
-                     <styleClass>
-                        <String fx:value="mt-4" />
-                        <String fx:value="input" />
-                     </styleClass>
-                  </TextField>
-                  <Label text="Senha" />
-                  <PasswordField fx:id="loginPassword" promptText="*********" stylesheets="@../css/global.css">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="loginPassword" alignment="CENTER" focusColor="#d9923b" labelFloat="true" promptText="Senha">
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
-                     <styleClass>
-                        <String fx:value="mt-4" />
-                        <String fx:value="input" />
-                     </styleClass>
-                  </PasswordField>
-                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#login" prefWidth="80.0" styleClass="mt-4" stylesheets="@../css/global.css" text="Entrar" />
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXPasswordField>
+                  <Button minWidth="60.0" mnemonicParsing="false" onAction="#login" prefWidth="80.0" styleClass="mt-4" stylesheets="@../css/global.css" text="Entrar">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Label fx:id="labelInsertAdmin" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#handleLabelAdmin" prefHeight="35.0" prefWidth="400.0" text="Não há gerentes cadastrados. Clique para cadastrar!" visible="false">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
                </children>
             </VBox>
          </center>

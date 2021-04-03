@@ -2,9 +2,11 @@ package com.controledecomandas.controllers;
 
 import com.controledecomandas.controllers.Dialogs.DialogInsertUserController;
 import com.controledecomandas.controllers.Dialogs.DialogOrderController;
+import com.controledecomandas.controllers.Dialogs.DialogUpdatePasswordController;
 import com.controledecomandas.database.dao.UserDao;
 import com.controledecomandas.models.User;
 import com.controledecomandas.models.UserSession;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -63,6 +65,19 @@ public class MyAccountController implements Initializable {
         }
     }
 
+    @FXML
+    void handleButtonUpdatePassword(ActionEvent event) throws IOException {
+        boolean buttonConfirmedClicked =
+                this.showFXMLAnchorPaneUpdatePasswordDialog(UserSession.getInstace(new User()).getUser());
+
+        if (buttonConfirmedClicked) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Senha alterada com sucesso!");
+            alert.show();
+
+        }
+    }
+
 
 
     private boolean showFXMLAnchorPaneUpdateUserDialog(User user, boolean update) throws IOException {
@@ -82,6 +97,26 @@ public class MyAccountController implements Initializable {
         DialogInsertUserController dialogController = loader.getController();
         dialogController.setDialogStage(dialogStage);
         dialogController.setUpdate(update);
+        dialogController.setUser(user);
+
+        dialogStage.showAndWait();
+        return dialogController.isButtonConfirmClicked();
+    }
+
+    private boolean showFXMLAnchorPaneUpdatePasswordDialog(User user) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(DialogOrderController.class.getResource("/fxml/FXMLDialogUpdatePassword.fxml"));
+        AnchorPane page = (AnchorPane) loader.load();
+
+        Stage dialogStage = new Stage();
+        String windowTitle = "Alterar senha";
+
+        dialogStage.setTitle(windowTitle);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+
+        DialogUpdatePasswordController dialogController = loader.getController();
+        dialogController.setDialogStage(dialogStage);
         dialogController.setUser(user);
 
         dialogStage.showAndWait();

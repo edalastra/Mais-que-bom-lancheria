@@ -1,5 +1,6 @@
 package com.controledecomandas.textFieldsValidators;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -11,7 +12,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class CurrencyField extends TextField{
+public class CurrencyField extends JFXTextField {
 
     private NumberFormat format;
     private SimpleDoubleProperty amount;

@@ -21,11 +21,11 @@ CREATE TABLE if NOT EXISTS bartable(
  CREATE TABLE IF NOT EXISTS bartable_worker(
    user_id integer not NULL,
    bartable_id integer NOT NULL,
-   FOREIGN KEY (user_id) REFERENCES "user"(id),
+   FOREIGN KEY (user_id) REFERENCES users(id),
    FOREIGN KEY (bartable_id) REFERENCES bartable(id),
    PRIMARY KEY(user_id, bartable_id)
   );
-  
+
 CREATE TABLE if NOT EXISTS orders(
 	id serial PRIMARY KEY,
   	bartable_id integer NOT NULL,
@@ -60,4 +60,16 @@ CREATE TABLE if NOT EXISTS order_item(
   FOREIGN KEY (order_id) REFERENCES orders(id),
   FOREIGN KEY (item_id) REFERENCES item(id),
   PRIMARY KEY (order_id, item_id)
+);
+
+CREATE TABLE if NOT EXISTS order_item_history(
+    order_id integer not NULL,
+    item_id Integer Not NULL,
+    quantity integer not NULL,
+    consumption_time time NOT NULL,
+    user_id integer NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (item_id) REFERENCES item(id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    PRIMARY KEY (order_id, item_id)
 );

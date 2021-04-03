@@ -2,7 +2,7 @@ package com.controledecomandas;
 
 import com.controledecomandas.database.CreateDatabase;
 import com.controledecomandas.database.PostgresConnection;
-import com.controledecomandas.database.dao.UserDao;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +20,6 @@ public class App extends Application{
             PostgresConnection postgresConnection = new PostgresConnection();
             CreateDatabase createDatabase = new CreateDatabase(postgresConnection);
             createDatabase.createTables();
-
 
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLLogin.fxml"));
             Scene scene = new Scene (root,900,600);

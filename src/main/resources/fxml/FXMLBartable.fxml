@@ -9,30 +9,29 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:controller="com.controledecomandas.controllers.BartableController" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.BartableController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F2EFEB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label prefHeight="49.0" prefWidth="42.0" text="Mesas">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <ListView fx:id="listViewBartable" prefHeight="286.0" prefWidth="600.0" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <ListView fx:id="listViewBartable" prefHeight="286.0" prefWidth="600.0" style="-fx-background-color: #F2EFEB;" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #F2EFEB;">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handelButtonInsert" text="Adicionar">
+                  <Button mnemonicParsing="false" onAction="#handelButtonInsert" stylesheets="@../css/global.css" text="Adicionar">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handelButtonUpdate" text="Alterar">
+                  <Button mnemonicParsing="false" onAction="#handelButtonUpdate" stylesheets="@../css/global.css" text="Alterar">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handelButtonDelete" text="Remover">
+                  <Button mnemonicParsing="false" onAction="#handelButtonDelete" stylesheets="@../css/global.css" text="Remover">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>

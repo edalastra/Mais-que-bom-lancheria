@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -18,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -87,8 +90,10 @@ public class HomeController implements Initializable {
     @FXML
     public void handleButtonLogout() throws IOException {
         UserSession.getInstace(new User()).cleanUserSession();
-        AnchorPane login = (AnchorPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLLogin.fxml"));
-        anchorPane.getChildren().setAll(login);
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        Parent login = (AnchorPane) FXMLLoader.load(getClass().getResource("/fxml/FXMLLogin.fxml"));
+        Scene scene = new Scene(login, 900, 700);
+        stage.setScene(scene);
     }
 
 

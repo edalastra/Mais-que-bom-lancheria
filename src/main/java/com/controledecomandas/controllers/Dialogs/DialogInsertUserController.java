@@ -4,6 +4,15 @@ import com.controledecomandas.database.dao.UserDao;
 import com.controledecomandas.models.Item;
 import com.controledecomandas.models.User;
 import com.controledecomandas.textFieldsValidators.CurrencyField;
+import com.controledecomandas.textFieldsValidators.NumberField;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.NumberValidator;
+import com.jfoenix.validation.RegexValidator;
+import com.jfoenix.validation.RequiredFieldValidator;
+import com.jfoenix.validation.StringLengthValidator;
+import com.jfoenix.validation.base.ValidatorBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,43 +32,40 @@ import static java.lang.Integer.parseInt;
 public class DialogInsertUserController implements Initializable {
 
     @FXML
-    private TextField textFieldUserFirstName;
+    private JFXTextField textFieldUserFirstName;
 
     @FXML
-    private TextField textFieldUserEmail;
+    private JFXTextField textFieldUserEmail;
 
     @FXML
-    private TextField textFieldUserZipcode;
+    private NumberField textFieldUserZipcode;
 
     @FXML
-    private TextField textFieldUserLastName;
+    private JFXTextField textFieldUserLastName;
 
     @FXML
-    private TextField textFieldUserTelephone;
+    private NumberField textFieldUserTelephone;
 
     @FXML
-    private TextField textFieldUserAddress;
+    private JFXTextField textFieldUserAddress;
 
     @FXML
-    private CurrencyField textFieldUserSalary;
+    private JFXPasswordField passFieldUserConfirm;
 
     @FXML
-    private PasswordField passwordFieldUser;
+    private JFXPasswordField passFieldUser;
 
     @FXML
-    private PasswordField passwordFieldUserConfirm;
+    private JFXRadioButton radioBtnWorker;
+
+    @FXML
+    private CurrencyField salary;
+
+    @FXML
+    private JFXRadioButton radioBtnAdmin;
 
     @FXML
     private ToggleGroup access;
-
-    @FXML
-    private RadioButton radioBtnWorker;
-
-    @FXML
-    private RadioButton radioBtnAdmin;
-
-    @FXML
-    private TextField inputUserCPassword;
 
 
     private boolean update;
@@ -72,19 +78,30 @@ public class DialogInsertUserController implements Initializable {
 
     @FXML
     public void handleButtonConfirm() {
-        user.setEmail(textFieldUserEmail.getText());
-        user.setPassword(passwordFieldUser.getText());
-        RadioButton radio = (RadioButton) access.getSelectedToggle();
-        user.setAccess(radio.getText().equals("Gerente"));
-        user.setFirstName(textFieldUserFirstName.getText());
-        user.setLastName(textFieldUserLastName.getText());
-        user.setTelephone(textFieldUserTelephone.getText());
-        user.setSalary(new BigDecimal(textFieldUserSalary.getAmount()));
-        user.setAddress(textFieldUserAddress.getText());
-        user.setZipcode(textFieldUserZipcode.getText());
 
-        buttonConfirmCheck = true;
-        dialogStage.close();
+        boolean validFields = textFieldUserFirstName.validate()
+                && textFieldUserLastName.validate()
+                && textFieldUserEmail.validate()
+                && textFieldUserTelephone.validate()
+                && textFieldUserZipcode.validate()
+                && textFieldUserAddress.validate()
+                && passFieldUser.validate()
+                && passFieldUserConfirm.validate();
+
+        if(validFields) {
+            user.setEmail(textFieldUserEmail.getText());
+            user.setPassword(passFieldUserConfirm.getText());
+            RadioButton radio = (RadioButton) access.getSelectedToggle();
+            user.setAccess(radio.getText().equals("Gerente"));
+            user.setFirstName(textFieldUserFirstName.getText());
+            user.setLastName(textFieldUserLastName.getText());
+            user.setTelephone(textFieldUserTelephone.getText());
+            user.setSalary(new BigDecimal(salary.getAmount()));
+            user.setAddress(textFieldUserAddress.getText());
+            user.setZipcode(textFieldUserZipcode.getText());
+            buttonConfirmCheck = true;
+            dialogStage.close();
+        }
 
     }
 
@@ -92,9 +109,9 @@ public class DialogInsertUserController implements Initializable {
         this.user = user;
         if(update) {
             textFieldUserEmail.setDisable(true);
-            textFieldUserSalary.setDisable(!user.getAccess());
-            passwordFieldUser.getParent().setVisible(false);
-            passwordFieldUserConfirm.getParent().setVisible(false);
+            salary.setDisable(!user.getAccess());
+            passFieldUser.getParent().setVisible(false);
+            passFieldUserConfirm.getParent().setVisible(false);
             radioBtnAdmin.setSelected(true);
             radioBtnAdmin.setSelected(!user.getAccess());
             radioBtnWorker.setDisable(!user.getAccess());
@@ -103,10 +120,11 @@ public class DialogInsertUserController implements Initializable {
             textFieldUserFirstName.setText(user.getFirstName());
             textFieldUserLastName.setText(user.getLastName());
             textFieldUserEmail.setText(user.getEmail());
-            textFieldUserSalary.setText("R$ " + user.getSalary());
+            salary.setText("R$ " + user.getSalary());
             textFieldUserTelephone.setText(user.getTelephone());
             textFieldUserZipcode.setText(user.getZipcode());
             textFieldUserAddress.setText(user.getAddress());
+
 
         }
     }
@@ -114,6 +132,38 @@ public class DialogInsertUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         UserDao userDao = new UserDao();
+        RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
+        requiredFieldValidator.setMessage("Este campo não pode estar vazio");
+        textFieldUserFirstName.getValidators().add(requiredFieldValidator);
+        textFieldUserLastName.getValidators().add(requiredFieldValidator);
+        textFieldUserEmail.getValidators().add(requiredFieldValidator);
+        textFieldUserTelephone.getValidators().add(requiredFieldValidator);
+        textFieldUserZipcode.getValidators().add(requiredFieldValidator);
+        textFieldUserAddress.getValidators().add(requiredFieldValidator);
+
+        salary.getValidators().add(requiredFieldValidator);
+
+        if(!update) {
+            passFieldUser.getValidators().add(requiredFieldValidator);
+            passFieldUserConfirm.getValidators().add(requiredFieldValidator);
+        }
+
+        RegexValidator telephoneValidator = new RegexValidator("Telefone inválido");
+        telephoneValidator.setRegexPattern("^[0-9]{11,12}$");
+        textFieldUserTelephone.getValidators().add(telephoneValidator);
+
+        RegexValidator zipcodeValidator = new RegexValidator("CEP inválido");
+        zipcodeValidator.setRegexPattern("^[0-9]{8}$");
+        textFieldUserZipcode.getValidators().add(zipcodeValidator);
+
+        RegexValidator emailValidator = new RegexValidator("Digite um email válido");
+        emailValidator.setRegexPattern("^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        textFieldUserEmail.getValidators().add(emailValidator);
+
+
+
+
         try {
             if(userDao.countAdminUsers() == 0) {
                 //radioBtnWorker.setSelected(false);

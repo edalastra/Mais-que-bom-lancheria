@@ -72,8 +72,8 @@ public class TableViewItemController implements Initializable {
     @FXML
     public void handleButtonUpdate() throws IOException {
         Item item = tableViewFoods.getSelectionModel().getSelectedItem();
-        boolean buttonConfirmedClicked = this.showFXMLAnchorPaneAddItemDialog(item, true);
         if (item != null) {
+            boolean buttonConfirmedClicked = this.showFXMLAnchorPaneAddItemDialog(item, true);
             if(buttonConfirmedClicked) {
                 try {
                     boolean updated = itemDao.update(item);
