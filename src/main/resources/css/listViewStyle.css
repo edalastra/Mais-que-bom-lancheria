@@ -1,0 +1,24 @@
+.list-view {
+    -fx-background-color: #D9923B;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #BF5315;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #8C1C03;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #D9923B;
+    -fx-text-fill: white;
+}
+
+.list-view .label {
+    -fx-text-fill: white;
+}
+
+.jfx-rippler {
+    -jfx-rippler-fill: red;
+}

@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -56,6 +53,9 @@ public class TableViewOrderController implements Initializable {
     @FXML
     private TableColumn<Item, BigDecimal> columnItemPrice;
 
+    @FXML
+    private TableColumn<Order, String> columnResponsible;
+
     private List<Order> orders;
 
     private List<Item> items;
@@ -66,6 +66,10 @@ public class TableViewOrderController implements Initializable {
 
 
     @FXML
+    private Button buttonCloseOrder;
+
+
+    @FXML
     public void handleButtonInsertOrder() throws IOException, SQLException {
         Order order = new Order();
         boolean buttonConfirmedClicked = this.showFXMLAnchorPaneInsertOrderDialog(order);
@@ -73,9 +77,6 @@ public class TableViewOrderController implements Initializable {
         if (buttonConfirmedClicked) {
             try {
                 boolean inserted = orderDao.insert(order, UserSession.getInstace(new User()).getUser().getId(), order.getBartable().getId());
-                if (inserted) {
-                    System.out.println("tudo certo");
-                }
                 loadTableOrders();
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -123,20 +124,25 @@ public class TableViewOrderController implements Initializable {
     public void handleButtonAddItem() throws IOException, SQLException {
         Order order = tableViewOrders.getSelectionModel().getSelectedItem();
         Item item = new Item();
-
-        boolean buttonConfirmedClicked = this.showFXMLAnchorPaneAddItemDialog(item, false);
-        if(buttonConfirmedClicked) {
-            try {
-                boolean inserted = orderDao.associateItem(item.getId(), order.getId(), item.getQuantity());
-                selectOrderTableView(order);
-            } catch (SQLException e) {
+        if(order != null) {
+            boolean buttonConfirmedClicked = this.showFXMLAnchorPaneAddItemDialog(item, false);
+            if(buttonConfirmedClicked) {
+                try {
+                    boolean inserted = orderDao.associateItem(item.getId(), order.getId(), item.getQuantity());
+                    selectOrderTableView(order);
+                } catch (SQLException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Erro! " + e.getMessage());
+                    alert.show();
+                }
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erro! " + e.getMessage());
+                alert.setContentText("Erro");
                 alert.show();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Erro");
+            alert.setContentText("Selecione uma comanda");
             alert.show();
         }
     }
@@ -186,9 +192,9 @@ public class TableViewOrderController implements Initializable {
         User session = UserSession.getInstace(new User()).getUser();
         if( session.getAccess() ) {
             orders = orderDao.list();
+            columnResponsible.setCellValueFactory(new PropertyValueFactory<>("worker"));
         } else {
-            orders = orderDao.listByWorker(session.getId());
-
+            orders = orderDao.listByWorker(session);
         }
 
         ObservableList<Order> obsOrders;
@@ -223,6 +229,11 @@ public class TableViewOrderController implements Initializable {
         } catch (IndexOutOfBoundsException | IOException | SQLException e) {
             System.out.println(e);
         }
+        boolean access = UserSession.getInstace(new User()).getUser().getAccess();
+
+        buttonCloseOrder.setVisible(access);
+        columnResponsible.setVisible(access);
+
 
         tableViewOrders.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {

@@ -194,19 +194,21 @@ public class UserDao {
 
         pstmt.setString(1,user.getEmail());
         ResultSet result = pstmt.executeQuery();
+
         if(!result.next()
                 || !GenerateHash.generate(oldPassword).equals(result.getString("password"))) {
+
             postgresConnection.desconnect();
 
             throw new SQLException("Senha atual incorreta!");
         }
+
         String sqlUpdatePassword = "UPDATE users SET password = ? WHERE id = ?";
 
         PreparedStatement pstmtUp = postgresConnection.createPrepedStatement(sqlUpdatePassword);
             pstmtUp.setString(1, GenerateHash.generate(newPassword));
             pstmtUp.setInt(2, user.getId());
-            pstmt.executeUpdate();
+            pstmtUp.executeUpdate();
             postgresConnection.desconnect();
-
     }
 }

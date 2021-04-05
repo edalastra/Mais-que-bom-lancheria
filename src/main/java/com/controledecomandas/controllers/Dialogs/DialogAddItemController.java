@@ -3,6 +3,8 @@ package com.controledecomandas.controllers.Dialogs;
 import com.controledecomandas.database.dao.ItemDao;
 import com.controledecomandas.models.Item;
 import com.controledecomandas.textFieldsValidators.NumberField;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +21,7 @@ public class DialogAddItemController implements Initializable {
 
 
     @FXML
-    private ListView<Item> listViewItems;
+    private JFXListView<Item> listViewItems;
 
     @FXML
     private NumberField textFieldQuantity;
@@ -82,6 +84,7 @@ public class DialogAddItemController implements Initializable {
     @FXML
     public void  handleButtonCancel() {
         dialogStage.close();
+        buttonConfirmCheck = false;
 
     }
 
@@ -105,11 +108,13 @@ public class DialogAddItemController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         itemList = itemDao.list();
         ObservableList obsItemList = FXCollections.observableArrayList(itemList);
-        listViewItems.setItems(obsItemList);
+        listViewItems. setItems(obsItemList);
 
         listViewItems.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> this.selectItemListView((Item) newValue)
             );
+        RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator("Digite a quantidade");
+        textFieldQuantity.getValidators().add(requiredFieldValidator);
     }
 
     private void selectItemListView(Item item){

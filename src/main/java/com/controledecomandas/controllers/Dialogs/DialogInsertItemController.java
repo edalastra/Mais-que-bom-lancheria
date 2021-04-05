@@ -2,6 +2,8 @@ package com.controledecomandas.controllers.Dialogs;
 
 import com.controledecomandas.models.Item;
 import com.controledecomandas.textFieldsValidators.CurrencyField;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,10 +21,10 @@ public class DialogInsertItemController implements Initializable {
     private Label labelMain;
 
     @FXML
-    private TextField textFieldItemDescription;
+    private JFXTextField textFieldItemDescription;
 
     @FXML
-    private TextField textFieldItemMaker;
+    private JFXTextField textFieldItemMaker;
 
     @FXML
     private CurrencyField moneyFieldItemCost;
@@ -51,20 +53,26 @@ public class DialogInsertItemController implements Initializable {
 
     @FXML
     public void handleButtonConfirm() {
-        item.setDescription(textFieldItemDescription.getText());
-        item.setMaker(textFieldItemMaker.getText());
-        RadioButton radio = (RadioButton) category.getSelectedToggle();
-        item.setCategory(radio.getText().toLowerCase(Locale.ROOT));
-        item.setCost(new BigDecimal(moneyFieldItemCost.getAmount()));
-        item.setPrice(new BigDecimal(moneyFieldItemPrice.getAmount()));
-        buttonConfirmCheck = true;
-        dialogStage.close();
-        try {
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro");
-            alert.setHeaderText(e.getMessage());
-            alert.showAndWait();
+        boolean validate = textFieldItemDescription.validate() &&
+                textFieldItemMaker.validate() &&
+                moneyFieldItemPrice.validate() &&
+                moneyFieldItemCost.validate();
+        if(validate) {
+            item.setDescription(textFieldItemDescription.getText());
+            item.setMaker(textFieldItemMaker.getText());
+            RadioButton radio = (RadioButton) category.getSelectedToggle();
+            item.setCategory(radio.getText().toLowerCase(Locale.ROOT));
+            item.setCost(new BigDecimal(moneyFieldItemCost.getAmount()));
+            item.setPrice(new BigDecimal(moneyFieldItemPrice.getAmount()));
+            buttonConfirmCheck = true;
+            dialogStage.close();
+            try {
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText(e.getMessage());
+                alert.showAndWait();
+            }
         }
 
     }
@@ -73,11 +81,10 @@ public class DialogInsertItemController implements Initializable {
         return buttonConfirmCheck;
     }
 
-
     @FXML
     public void  handleButtonCancel() {
         dialogStage.close();
-
+        buttonConfirmCheck = false;
     }
 
     public void setItem(Item item) {
@@ -124,6 +131,12 @@ public class DialogInsertItemController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator("Este campo deve ser prenchido!");
+        textFieldItemDescription.getValidators().add(requiredFieldValidator);
+        textFieldItemMaker.getValidators().add(requiredFieldValidator);
+        moneyFieldItemCost.getValidators().add(requiredFieldValidator);
+        moneyFieldItemPrice.getValidators().add(requiredFieldValidator);
+
         if(update) {
             labelMain.setText("Alterar Item");
         }

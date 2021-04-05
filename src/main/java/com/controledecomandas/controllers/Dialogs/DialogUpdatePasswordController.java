@@ -1,23 +1,27 @@
 package com.controledecomandas.controllers.Dialogs;
 
 import com.controledecomandas.database.dao.UserDao;
-import com.controledecomandas.models.Order;
 import com.controledecomandas.models.User;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
+
 import javafx.stage.Stage;
 
-public class DialogUpdatePasswordController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DialogUpdatePasswordController implements Initializable {
     @FXML
-    private PasswordField passFieldOld;
+    private JFXPasswordField passFieldOld;
 
     @FXML
-    private PasswordField passFieldNew;
+    private JFXPasswordField passFieldNew;
 
     @FXML
-    private PasswordField passFieldConfirm;
+    private JFXPasswordField passFieldConfirm;
 
     private boolean buttonConfirmCheck = false;
 
@@ -29,27 +33,33 @@ public class DialogUpdatePasswordController {
 
     @FXML
     public void handleButtonConfirm() {
-        try {
-            if(!passFieldConfirm.getText().equals(passFieldNew.getText())) {
-                throw new Exception("Repita corretamente a nova senha!");
+        boolean validate =
+                passFieldOld.validate() &&
+                passFieldNew.validate() &&
+                passFieldConfirm.validate();
+        if(validate) {
+            try {
+                if (!passFieldConfirm.getText().equals(passFieldNew.getText())) {
+                    throw new Exception("Repita corretamente a nova senha!");
+                }
+                userDao.updatePassword(user, passFieldOld.getText(), passFieldConfirm.getText());
+                buttonConfirmCheck = true;
+                dialogStage.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText(e.getMessage());
+                alert.showAndWait();
             }
-            userDao.updatePassword(user,passFieldOld.getText(), passFieldNew.getText());
-            buttonConfirmCheck = true;
-            dialogStage.close();
-
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erro");
-            alert.setHeaderText(e.getMessage());
-            alert.showAndWait();
         }
-
     }
 
         @FXML
     public void handleButtonCancel() {
         dialogStage.close();
-
+        buttonConfirmCheck = false;
     }
 
     public void setUser(User user) {
@@ -72,4 +82,11 @@ public class DialogUpdatePasswordController {
         this.buttonConfirmCheck = buttonConfirmCheck;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator("Este campo precisa ser prenchido!");
+        passFieldOld.getValidators().add(requiredFieldValidator);
+        passFieldNew.getValidators().add(requiredFieldValidator);
+        passFieldConfirm.getValidators().add(requiredFieldValidator);
+    }
 }

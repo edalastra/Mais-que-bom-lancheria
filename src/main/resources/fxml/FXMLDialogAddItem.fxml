@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <?import com.controledecomandas.textFieldsValidators.NumberField?>
-<?import java.lang.String?>
 <AnchorPane prefHeight="529.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controledecomandas.controllers.Dialogs.DialogAddItemController">
     <children>
+      <JFXListView fx:id="listViewItems" layoutY="73.0" prefHeight="400.0" prefWidth="769.0" stylesheets="@../css/listViewStyle.css" />
         <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="154.0" layoutY="32.0" prefHeight="17.0" prefWidth="457.0" text="Adicionar item a comanda">
             <font>
                 <Font size="13.0" />
@@ -20,7 +21,6 @@
         </Label>
         <Group layoutX="116.0" layoutY="78.0" />
         <Group layoutX="163.0" layoutY="128.0" />
-      <ListView fx:id="listViewItems" layoutX="-3.0" layoutY="68.0" prefHeight="404.0" prefWidth="771.0" />
       <HBox alignment="CENTER" layoutX="-2.0" layoutY="489.0" prefHeight="57.0" prefWidth="771.0">
          <children>
             <Label fx:id="labelItem" style="-fx-text-fill: #8C1C03;" textOverrun="WORD_ELLIPSIS">
@@ -36,14 +36,10 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <NumberField styleClass="mt-4" fx:id="textFieldQuantity" prefHeight="25.0" prefWidth="31.0" stylesheets="@../css/global.css">
-                <styleClass>
-                    <String fx:value="mt-4" />
-                    <String fx:value="input" />
-                </styleClass>
+            <NumberField fx:id="textFieldQuantity" focusColor="#d9923b" prefHeight="25.0" prefWidth="32.0">
                <HBox.margin>
-                  <Insets right="40.0" />
-              </HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
             </NumberField>
             <Button fx:id="handleButtonConfirm" mnemonicParsing="false" onAction="#handleButtonConfirm" stylesheets="@../css/global.css" text="Adicionar">
                <HBox.margin>

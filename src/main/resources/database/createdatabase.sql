@@ -20,7 +20,7 @@ CREATE TABLE if NOT EXISTS bartable(
  
  CREATE TABLE IF NOT EXISTS bartable_worker(
    user_id integer not NULL,
-   bartable_id integer NOT NULL,
+   bartable_id integer NOT NULL UNIQUE ,
    FOREIGN KEY (user_id) REFERENCES users(id),
    FOREIGN KEY (bartable_id) REFERENCES bartable(id),
    PRIMARY KEY(user_id, bartable_id)

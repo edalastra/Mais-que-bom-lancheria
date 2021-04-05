@@ -4,6 +4,7 @@ import com.controledecomandas.controllers.Dialogs.DialogInsertBartable;
 import com.controledecomandas.controllers.Dialogs.DialogOrderController;
 import com.controledecomandas.database.dao.BartableDao;
 import com.controledecomandas.models.Bartable;
+import com.jfoenix.controls.JFXListView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -24,8 +24,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class BartableController implements Initializable {
+
     @FXML
-    private ListView<Bartable> listViewBartable;
+    private JFXListView<Bartable> listViewBartable;
 
     List<Bartable> bartableList;
 
@@ -57,9 +58,10 @@ public class BartableController implements Initializable {
     @FXML
     public void handelButtonUpdate() throws IOException {
         Bartable bartable = listViewBartable.getSelectionModel().getSelectedItem();
-        boolean buttonConfirmedClicked = this.showFXMLAnchorPaneDialog(bartable, true);
         if(bartable != null) {
-        if(buttonConfirmedClicked) {
+            boolean buttonConfirmedClicked = this.showFXMLAnchorPaneDialog(bartable, true);
+
+            if(buttonConfirmedClicked) {
             try {
                 boolean updated = bartableDao.update(bartable);
                 if (updated) {

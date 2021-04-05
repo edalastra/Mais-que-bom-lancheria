@@ -43,6 +43,7 @@ public class ReportController implements Initializable {
 
 
 
+
     @FXML
     public void handleButtonGenerate(ActionEvent event) throws JRException, SQLException, ParseException {
         RadioButton periodSelected = (RadioButton) period.getSelectedToggle();

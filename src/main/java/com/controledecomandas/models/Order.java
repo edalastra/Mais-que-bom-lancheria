@@ -8,6 +8,8 @@ public class Order {
     private Bartable bartable;
     private Timestamp openAt;
     private Timestamp closeAt;
+    private User worker;
+
 
     public int getId() {
         return id;
@@ -39,6 +41,14 @@ public class Order {
 
     public void setCloseAt(Timestamp closeAt) {
         this.closeAt = closeAt;
+    }
+
+    public void setWorker(User worker) {
+        this.worker = worker;
+    }
+
+    public String getWorker() {
+        return worker.getFirstName() + " " + worker.getLastName();
     }
 
     @Override

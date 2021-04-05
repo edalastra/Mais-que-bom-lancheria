@@ -4,13 +4,18 @@ import com.controledecomandas.database.dao.BartableDao;
 import com.controledecomandas.models.Bartable;
 import com.controledecomandas.models.Order;
 import com.controledecomandas.textFieldsValidators.NumberField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class DialogInsertBartable {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DialogInsertBartable implements Initializable {
 
     @FXML
     private NumberField numberFieldCapacity;
@@ -28,16 +33,19 @@ public class DialogInsertBartable {
 
     @FXML
     public void handleButtonConfirm() {
-        bartable.setCapacity(numberFieldCapacity.getValue());
-        buttonConfirmCheck = true;
-        dialogStage.close();
+        if(numberFieldCapacity.validate()) {
+            bartable.setCapacity(numberFieldCapacity.getValue());
+            buttonConfirmCheck = true;
+            dialogStage.close();
+        }
+
     }
 
 
     @FXML
     public void  handleButtonCancel() {
         dialogStage.close();
-
+        buttonConfirmCheck = false;
     }
 
     public Bartable getBartable() {
@@ -71,4 +79,9 @@ public class DialogInsertBartable {
         this.buttonConfirmCheck = buttonConfirmCheck;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        RequiredFieldValidator requiredFieldValidator =  new RequiredFieldValidator("Digite um valor");
+        numberFieldCapacity.getValidators().add(requiredFieldValidator);
+    }
 }

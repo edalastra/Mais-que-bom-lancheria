@@ -3,13 +3,9 @@ package com.controledecomandas.database.dao;
 import com.controledecomandas.database.PostgresConnection;
 import com.controledecomandas.models.Bartable;
 import com.controledecomandas.models.Order;
+import com.controledecomandas.models.User;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,14 +24,13 @@ public class OrderDao {
             pstmtWorkerBartable.setInt(2, bartable_id);
 
             pstmtWorkerBartable.executeUpdate();
-
+            System.out.println(workerId);
             try (PreparedStatement pstmtOrder = postgresConnection.createPrepedStatement(sqlInsertOrder)) {
 
                 pstmtOrder.setInt(1, bartable_id);
                 if (pstmtOrder.executeUpdate() == 1) {
                     return true;
                 }
-
 
             } catch (SQLException throwables) {
                 throw new Exception("Erro ao cadastrar comanda!");
@@ -54,7 +49,7 @@ public class OrderDao {
         PostgresConnection postgresConnection = new PostgresConnection();
         boolean connected = postgresConnection.connect();
 
-        String sqlQuery = "SELECT o.id, o.open_at, b.id as bartable_id, b.capacity as bartable_capacity FROM orders o " +
+        String sqlQuery = "SELECT u.id as user_id, u.first_name, u.last_name, o.id, o.open_at, b.id as bartable_id, b.capacity as bartable_capacity FROM orders o " +
                 "JOIN bartable b ON b.id = o.bartable_id " +
                 "JOIN bartable_worker bw ON bw.bartable_id = b.id " +
                 "JOIN users u ON u.id = bw.user_id " +
@@ -72,8 +67,12 @@ public class OrderDao {
                 Bartable bartable = new Bartable();
                 bartable.setId(rs.getInt("bartable_id"));
                 bartable.setCapacity(rs.getInt("bartable_capacity"));
+                User user = new User();
+                user.setId(rs.getInt("user_id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
                 order.setBartable(bartable);
-
+                order.setWorker(user);
                 orders.add(order);
             }
         } catch (SQLException throwables) {
@@ -85,7 +84,7 @@ public class OrderDao {
         return orders;
     }
 
-    public List<Order> listByWorker(int workerId) throws SQLException {
+    public List<Order> listByWorker(User user) throws SQLException {
         PostgresConnection postgresConnection = new PostgresConnection();
         boolean connected = postgresConnection.connect();
 
@@ -97,7 +96,7 @@ public class OrderDao {
 
         PreparedStatement pstmt = postgresConnection.createPrepedStatement(sqlQuery);
 
-        pstmt.setInt(1, workerId);
+        pstmt.setInt(1, user.getId());
         ResultSet rs = pstmt.executeQuery();
         List<Order> orders = new ArrayList<>();
 
@@ -109,7 +108,6 @@ public class OrderDao {
             bartable.setId(rs.getInt("bartable_id"));
             bartable.setCapacity(rs.getInt("bartable_capacity"));
             order.setBartable(bartable);
-
             orders.add(order);
         }
 

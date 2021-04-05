@@ -85,8 +85,8 @@ public class DialogInsertUserController implements Initializable {
                 && textFieldUserTelephone.validate()
                 && textFieldUserZipcode.validate()
                 && textFieldUserAddress.validate()
-                && passFieldUser.validate()
-                && passFieldUserConfirm.validate();
+                && (passFieldUser.validate() || update)
+                && (passFieldUserConfirm.validate() || update);
 
         if(validFields) {
             user.setEmail(textFieldUserEmail.getText());
@@ -112,10 +112,10 @@ public class DialogInsertUserController implements Initializable {
             salary.setDisable(!user.getAccess());
             passFieldUser.getParent().setVisible(false);
             passFieldUserConfirm.getParent().setVisible(false);
-            radioBtnAdmin.setSelected(true);
-            radioBtnAdmin.setSelected(!user.getAccess());
-            radioBtnWorker.setDisable(!user.getAccess());
-            radioBtnAdmin.setDisable(!user.getAccess());
+
+            radioBtnAdmin.setSelected(user.getAccess());
+            radioBtnWorker.setSelected(!user.getAccess());
+
 
             textFieldUserFirstName.setText(user.getFirstName());
             textFieldUserLastName.setText(user.getLastName());
@@ -124,7 +124,6 @@ public class DialogInsertUserController implements Initializable {
             textFieldUserTelephone.setText(user.getTelephone());
             textFieldUserZipcode.setText(user.getZipcode());
             textFieldUserAddress.setText(user.getAddress());
-
 
         }
     }
